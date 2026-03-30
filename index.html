@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LĪDAKA4 — Mobilais Operators</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --deep: #001622;
+      --mid: #002a40;
+      --teal: #0099bb;
+      --accent: #00ffcc;
+      --text: #cce8f0;
+      --muted: #5a8a99;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--deep);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,150,200,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(0,255,200,0.06) 0%, transparent 50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 68px;
+      background: rgba(0,22,34,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,200,230,0.12);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--cyan);
+      letter-spacing: -1px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul a {
+      color: var(--text); text-decoration: none;
+      font-size: 0.92rem; font-weight: 500;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--cyan); }
+    .nav-cart {
+      background: var(--teal); color: #fff;
+      border: none; padding: 9px 22px; border-radius: 6px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      cursor: pointer; text-decoration: none; font-size: 0.9rem;
+      transition: background .2s;
+      position: relative;
+    }
+    .nav-cart:hover { background: var(--cyan); color: var(--deep); }
+    #cart-count {
+      position: absolute; top: -8px; right: -8px;
+      background: var(--accent); color: var(--deep);
+      border-radius: 50%; width: 20px; height: 20px;
+      font-size: 0.72rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      display: none;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 100px 24px 80px;
+      overflow: hidden;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 24px;
+      border: 1px solid rgba(0,255,200,0.3);
+      padding: 6px 18px; border-radius: 40px;
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -3px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--cyan); }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted);
+      max-width: 560px; margin: 20px auto 44px;
+      line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--cyan); color: var(--deep);
+      padding: 14px 38px; border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      text-decoration: none; font-size: 1rem;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 30px rgba(0,230,255,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,230,255,0.4); }
+    .btn-ghost {
+      border: 1px solid var(--teal); color: var(--cyan);
+      padding: 14px 38px; border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      text-decoration: none; font-size: 1rem;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--cyan); }
+
+    /* WAVE */
+    .wave-divider { line-height: 0; }
+    .wave-divider svg { display: block; width: 100%; }
+
+    /* PLANS SECTION */
+    .plans-section {
+      position: relative; z-index: 1;
+      padding: 80px 24px 100px;
+      background: var(--mid);
+    }
+    .section-label {
+      text-align: center;
+      font-size: 0.78rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      text-align: center;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: #fff; margin-bottom: 60px;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 1200px; margin: 0 auto;
+    }
+    .plan-card {
+      background: rgba(0,16,28,0.7);
+      border: 1px solid rgba(0,180,220,0.15);
+      border-radius: 16px; padding: 36px 28px;
+      position: relative; overflow: hidden;
+      transition: transform .3s, border-color .3s;
+      cursor: default;
+    }
+    .plan-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,230,255,0.4);
+    }
+    .plan-card.featured {
+      border-color: rgba(0,255,200,0.4);
+      background: rgba(0,40,60,0.8);
+    }
+    .plan-card.featured::before {
+      content: '🔥 POPULĀRĀKAIS';
+      position: absolute; top: 16px; right: 16px;
+      background: var(--accent); color: var(--deep);
+      font-size: 0.65rem; letter-spacing: 2px; font-weight: 700;
+      padding: 4px 10px; border-radius: 4px;
+    }
+    .plan-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--cyan));
+      opacity: 0; transition: opacity .3s;
+    }
+    .plan-card:hover::after, .plan-card.featured::after { opacity: 1; }
+
+    .plan-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem; font-weight: 800;
+      color: #fff; margin-bottom: 4px;
+    }
+    .plan-price {
+      font-size: 2.8rem; font-weight: 700;
+      color: var(--cyan);
+      font-family: 'Syne', sans-serif;
+      line-height: 1; margin: 16px 0 4px;
+    }
+    .plan-price span { font-size: 1rem; color: var(--muted); font-weight: 400; }
+    .plan-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 24px; }
+    .plan-features { list-style: none; margin-bottom: 28px; }
+    .plan-features li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0,150,180,0.1);
+      font-size: 0.88rem; color: var(--text);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .plan-features li::before { content: '✦'; color: var(--cyan); font-size: 0.7rem; margin-top: 3px; flex-shrink: 0; }
+    .btn-plan {
+      display: block; width: 100%;
+      background: transparent;
+      border: 1px solid var(--teal); color: var(--cyan);
+      padding: 12px; border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 0.92rem; text-align: center;
+      text-decoration: none; cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .btn-plan:hover, .plan-card.featured .btn-plan {
+      background: var(--cyan); color: var(--deep); border-color: var(--cyan);
+    }
+    .plan-card.featured .btn-plan:hover { background: var(--accent); border-color: var(--accent); }
+
+    /* FEATURES */
+    .features-section {
+      position: relative; z-index: 1;
+      padding: 80px 24px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px; max-width: 1100px; margin: 0 auto;
+    }
+    .feature-item { text-align: center; }
+    .feature-icon {
+      font-size: 2.4rem; margin-bottom: 16px;
+      display: block;
+    }
+    .feature-item h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; color: #fff; margin-bottom: 8px;
+    }
+    .feature-item p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* EXTRA DATA */
+    .extra-section {
+      background: var(--mid);
+      padding: 60px 24px;
+      text-align: center;
+    }
+    .extra-box {
+      display: inline-block;
+      border: 1px solid rgba(0,230,255,0.2);
+      border-radius: 12px; padding: 28px 48px;
+      background: rgba(0,10,20,0.5);
+    }
+    .extra-box h3 { font-family: 'Syne',sans-serif; font-size: 1.3rem; color: var(--accent); margin-bottom: 8px; }
+    .extra-box p { color: var(--text); font-size: 0.9rem; }
+    .extra-price { font-size: 2rem; font-weight: 700; color: var(--cyan); font-family: 'Syne',sans-serif; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(0,180,220,0.1);
+      padding: 40px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+      font-size: 0.82rem; color: var(--muted);
+    }
+    footer a { color: var(--teal); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+    .footer-logo { font-family: 'Syne',sans-serif; font-weight: 800; color: var(--cyan); font-size: 1.2rem; }
+
+    /* Toast */
+    #toast {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      background: var(--accent); color: var(--deep);
+      padding: 14px 24px; border-radius: 10px;
+      font-family: 'Syne',sans-serif; font-weight: 700;
+      font-size: 0.9rem;
+      transform: translateY(80px); opacity: 0;
+      transition: all .4s cubic-bezier(.34,1.56,.64,1);
+      pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    @media(max-width:640px){
+      nav { padding: 0 20px; }
+      nav ul { display: none; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">LĪDAKA<span>4</span></a>
+  <ul>
+    <li><a href="index.html">Sākums</a></li>
+    <li><a href="plans.html">Plāni</a></li>
+    <li><a href="#features">Par mums</a></li>
+  </ul>
+  <a class="nav-cart" href="cart.html">
+    🛒 Grozs
+    <span id="cart-count">0</span>
+  </a>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">🐟 Latvijas straujākais operators</div>
+  <h1>MOBILAIS<br><span>OPERATORS</span><br>LATVIJAI</h1>
+  <p class="hero-sub">Godīgas cenas. Ātra interneta pārklājums. Zvani un ziņas uz visu Eiropu — bez pārsteigumiem.</p>
+  <div class="hero-btns">
+    <a href="plans.html" class="btn-primary">Skatīt Plānus →</a>
+    <a href="#plans" class="btn-ghost">Uzzināt Vairāk</a>
+  </div>
+</section>
+
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#002a40" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/>
+  </svg>
+</div>
+
+<section class="plans-section" id="plans">
+  <div class="section-label">tarifu plāni</div>
+  <h2 class="section-title">Izvēlies Savu Plānu</h2>
+  <div class="plans-grid">
+
+    <!-- BOMZIS -->
+    <div class="plan-card">
+      <div class="plan-name">🦆 Bomzis</div>
+      <div class="plan-price">€0.75<span>/mēn.</span></div>
+      <div class="plan-desc">Ideāls sākuma plāns ikdienai</div>
+      <ul class="plan-features">
+        <li>90 min. zvani uz Latviju un Eiropu</li>
+        <li>0.02 €/min uz jebkuru valsti pasaulē</li>
+        <li>500 SMS uz jebkuru Eiropas valsti</li>
+        <li>0.001–0.005 €/SMS pasaulē</li>
+        <li>50 GB internets Latvijā</li>
+        <li>27 GB Polijā, Lietuvā, Zviedrijā, Igaunijā, Vācijā, Rumānijā, Somijā, Dānijā, Čehijā</li>
+        <li>7 GB pārējās pasaules valstīs</li>
+      </ul>
+      <button class="btn-plan" onclick="addToCart('Bomzis', 0.75)">Izvēlēties →</button>
+    </div>
+
+    <!-- KAĻJANS -->
+    <div class="plan-card">
+      <div class="plan-name">💨 Kaļjans</div>
+      <div class="plan-price">€1.50<span>/mēn.</span></div>
+      <div class="plan-desc">Vairāk zvanu, bezlimita ziņas Eiropā</div>
+      <ul class="plan-features">
+        <li>500 min. zvani uz visām Eiropas valstīm</li>
+        <li>0.02 €/min uz citām valstīm</li>
+        <li>Bezlimita SMS uz visām Eiropas valstīm</li>
+        <li>0.001–0.004 €/SMS citur pasaulē</li>
+        <li>Bezlimita internets Baltijā un Polijā</li>
+        <li>65 GB Polijā, Baltijā un kaimiņvalstīs</li>
+        <li>35 GB pārējā Eiropā, 11 GB pasaulē*</li>
+      </ul>
+      <button class="btn-plan" onclick="addToCart('Kaļjans', 1.50)">Izvēlēties →</button>
+    </div>
+
+    <!-- MEINARDS -->
+    <div class="plan-card featured">
+      <div class="plan-name">🎩 Meinards</div>
+      <div class="plan-price">€3.00<span>/mēn.</span></div>
+      <div class="plan-desc">Bezlimita viss — visur Eiropā un tālāk</div>
+      <ul class="plan-features">
+        <li>Bezlimita zvani uz visām valstīm</li>
+        <li>Bezlimita SMS uz visām valstīm</li>
+        <li>Bezlimita internets iepriekš minētajās valstīs</li>
+        <li>100 GB pārējā Eiropā</li>
+        <li>27 GB visās citās pasaules valstīs*</li>
+        <li>Prioritārs tīkls Latvijā</li>
+      </ul>
+      <button class="btn-plan" onclick="addToCart('Meinards', 3.00)">Izvēlēties →</button>
+    </div>
+
+    <!-- MILJARDIERIS -->
+    <div class="plan-card">
+      <div class="plan-name">💎 Miljardieris</div>
+      <div class="plan-price">€5.00<span>/mēn.</span></div>
+      <div class="plan-desc">Absolūts bezlimits — visā pasaulē</div>
+      <ul class="plan-features">
+        <li>Bezlimita zvani visā pasaulē</li>
+        <li>Bezlimita SMS visā pasaulē</li>
+        <li>Bezlimita internets visā Eiropā</li>
+        <li>Bezlimita internets Krievijā, Austrālijā, ASV, Kanādā, Baltkrievijā</li>
+        <li>100 GB visās pārējās pasaules valstīs</li>
+        <li>VIP klientu atbalsts 24/7</li>
+      </ul>
+      <button class="btn-plan" onclick="addToCart('Miljardieris', 5.00)">Izvēlēties →</button>
+    </div>
+
+  </div>
+  <p style="text-align:center;color:var(--muted);font-size:0.78rem;margin-top:24px;">* Neattiecas uz Ziemeļkoreju. Papildu GB: 0.12 €/GB visos plānos.</p>
+</section>
+
+<div class="wave-divider" style="background:var(--mid)">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#001622" d="M0,30 C360,0 1080,60 1440,30 L1440,60 L0,60 Z"/>
+  </svg>
+</div>
+
+<section class="features-section" id="features">
+  <div class="section-label">kāpēc līdaka4</div>
+  <h2 class="section-title" style="text-align:center;font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);color:#fff;margin-bottom:56px;">Operators, Kuram Var Uzticēties</h2>
+  <div class="features-grid">
+    <div class="feature-item">
+      <span class="feature-icon">🌐</span>
+      <h3>100+ Valstis</h3>
+      <p>Roamings gandrīz visur — ar saprātīgām cenām un bez slēptām maksām.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">⚡</span>
+      <h3>4G/5G Tīkls</h3>
+      <p>Latvijā pilns 5G pārklājums. Ātra datu pārsūtīšana jebkurā vietā.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">💬</span>
+      <h3>24/7 Atbalsts</h3>
+      <p>Latviskais klientu serviss — pa tālruni, čatā un e-pastā jebkurā laikā.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🔒</span>
+      <h3>Nav Slēpto Maksu</h3>
+      <p>Maksā tikai to, ko redzi. Skaidras cenas, bez pārsteigumiem rēķinā.</p>
+    </div>
+  </div>
+</section>
+
+<section class="extra-section">
+  <div class="extra-box">
+    <h3>Nepietiek datu?</h3>
+    <p style="margin-bottom:12px;">Jebkurā plānā vari piepirkt papildu datus:</p>
+    <div class="extra-price">0.12 € / 1 GB</div>
+    <p style="margin-top:8px;font-size:0.82rem;color:var(--muted);">Spēkā līdz perioda beigām · Bez derīguma termiņa ierobežojuma</p>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-logo">LĪDAKA4</div>
+    <div style="margin-top:6px;">© 2025 LĪDAKA4. Visas tiesības aizsargātas.</div>
+  </div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;">
+    <a href="plans.html">Plāni</a>
+    <a href="cart.html">Grozs</a>
+    <a href="#">Privātuma Politika</a>
+    <a href="#">Sazināties</a>
+  </div>
+</footer>
+
+<div id="toast">✓ Pievienots grozam!</div>
+
+<script>
+  // Cart logic with cookies
+  function getCart() {
+    try {
+      const c = document.cookie.split(';').find(r=>r.trim().startsWith('l4cart='));
+      return c ? JSON.parse(decodeURIComponent(c.trim().substring(7))) : [];
+    } catch { return []; }
+  }
+  function saveCart(cart) {
+    const exp = new Date(); exp.setFullYear(exp.getFullYear()+1);
+    document.cookie = 'l4cart=' + encodeURIComponent(JSON.stringify(cart)) + '; expires=' + exp.toUTCString() + '; path=/';
+  }
+  function updateCartBadge() {
+    const cart = getCart();
+    const total = cart.reduce((s,i)=>s+i.qty,0);
+    const el = document.getElementById('cart-count');
+    if (total > 0) { el.style.display='flex'; el.textContent=total; }
+    else { el.style.display='none'; }
+  }
+  function addToCart(name, price) {
+    const cart = getCart();
+    const ex = cart.find(i=>i.name===name);
+    if (ex) ex.qty++; else cart.push({name,price,qty:1});
+    saveCart(cart);
+    updateCartBadge();
+    showToast('✓ ' + name + ' pievienots grozam!');
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 2600);
+  }
+  updateCartBadge();
+</script>
+</body>
+</html>
